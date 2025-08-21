@@ -2,12 +2,21 @@
 using MiniBank.Api.Data;
 using MiniBank.Api.Interfaces;
 using MiniBank.Api.Repositories;
+using MiniBank.Api.Services;
+using System.Text.Json.Serialization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 // Services
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(o =>
+{
+    o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    o.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});  
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
