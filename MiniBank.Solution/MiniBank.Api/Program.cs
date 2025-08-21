@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MiniBank.Api.Data;
+using MiniBank.Api.Interfaces;
+using MiniBank.Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 // Services
 builder.Services.AddControllers();
