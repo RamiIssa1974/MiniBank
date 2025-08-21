@@ -5,6 +5,11 @@
 *.userosscache
 *.sln.docstates
 
+App_Data/
+*.db
+*.db-wal
+*.db-shm
+
 # Build results
 [Bb]in/
 [Oo]bj/
