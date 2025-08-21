@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MiniBank.Api.Interfaces;
 
 namespace MiniBank.Api.Controllers;
@@ -31,6 +32,17 @@ public class AccountsController : ControllerBase
     [HttpGet("by-customer/{customerId:int}")]
     public async Task<IActionResult> GetByCustomer(int customerId, CancellationToken ct)
     {
+        var items = await _repo.GetByCustomerAsync(customerId, ct);
+        return Ok(items);
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet("my")]
+    public async Task<IActionResult> GetMyAccounts(CancellationToken ct)
+    {
+        var claim = User.FindFirst("customerId")?.Value;
+        if (string.IsNullOrWhiteSpace(claim)) return Forbid(); // not a customer (probably admin)
+        var customerId = int.Parse(claim);
         var items = await _repo.GetByCustomerAsync(customerId, ct);
         return Ok(items);
     }
