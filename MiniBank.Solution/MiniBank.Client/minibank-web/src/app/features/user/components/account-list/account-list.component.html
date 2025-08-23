@@ -1,0 +1,9 @@
+<!-- account-list.component.html -->
+<div class="accounts" *ngIf="accounts?.length; else empty">
+  <button *ngFor="let a of accounts" (click)="select.emit(a.id)" class="account">
+    <div>{{ mask(a.iban) }}</div>
+    <div>{{ a.balance | currency:'ILS':'symbol':'1.2-2':'he-IL' }}</div>
+    <small *ngIf="a.isLocked">Locked</small>
+  </button>
+</div>
+<ng-template #empty>No accounts</ng-template>

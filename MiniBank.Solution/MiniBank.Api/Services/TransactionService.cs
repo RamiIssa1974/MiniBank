@@ -24,7 +24,7 @@ public class TransactionService : ITransactionService
         var entry = new TransactionEntry
         {
             AccountId = account.Id,
-            Type = "Deposit",
+            Type = TransactionType.Deposit,
             Amount = req.Amount,
             Description = req.Description,
             CreatedAt = DateTime.UtcNow
@@ -52,7 +52,7 @@ public class TransactionService : ITransactionService
         var entry = new TransactionEntry
         {
             AccountId = account.Id,
-            Type = "Withdraw",
+            Type = TransactionType.Withdraw,
             Amount = req.Amount,
             Description = req.Description,
             CreatedAt = DateTime.UtcNow
@@ -93,7 +93,7 @@ public class TransactionService : ITransactionService
         var outEntry = new TransactionEntry
         {
             AccountId = from.Id,
-            Type = "TransferOut",
+            Type = TransactionType.TransferOut,
             Amount = req.Amount,
             Description = req.Description,
             CreatedAt = DateTime.UtcNow,
@@ -102,7 +102,7 @@ public class TransactionService : ITransactionService
         var inEntry = new TransactionEntry
         {
             AccountId = to.Id,
-            Type = "TransferIn",
+            Type = TransactionType.TransferIn,
             Amount = req.Amount,
             Description = req.Description,
             CreatedAt = DateTime.UtcNow,

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiniBank.Api.Dtos;
+using MiniBank.Api.Infrastructure.Filters;
 using MiniBank.Api.Interfaces;
 
 namespace MiniBank.Api.Controllers;
@@ -43,6 +44,8 @@ public class TransactionsController : ControllerBase
         var result = await _repo.GetPagedAsync(accountId, type, dateFrom, dateTo, sortDesc, page, pageSize, ct);
         return Ok(result);
     }
+
+    [ServiceFilter(typeof(ExecutionTimeActionFilter))]
     [HttpPost("deposit")]
     public async Task<IActionResult> Deposit([FromBody] DepositWithdrawRequest req, CancellationToken ct)
     {

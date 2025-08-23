@@ -1,0 +1,25 @@
+<!-- src/app/features/user/user.component.html -->
+<header class="topbar" *ngIf="user$ | async as u">
+  <div class="left">
+    <strong>MiniBank</strong>
+  </div>
+  <div class="right">
+    <span>Hello, {{u.userName}}</span>
+    <button type="button" (click)="onLogout()">Logout</button>
+  </div>
+</header>
+<section class="container">
+  <app-account-list [accounts]="accounts$ | async" (select)="onSelectAccount($event)">
+  </app-account-list>
+  <app-transaction-form 
+    [accounts]="(accounts$ | async) ?? []" 
+    (deposit)="onDeposit($event)"
+    (withdraw)="onWithdraw($event)"
+    (transfer)="onTransfer($event)">
+  </app-transaction-form>
+
+  <h2>Dashboard</h2>
+
+  <app-transaction-table [items]="tx$ | async" [total]="total$ | async" (pageChange)="onPageChange($event)">
+  </app-transaction-table>
+</section>

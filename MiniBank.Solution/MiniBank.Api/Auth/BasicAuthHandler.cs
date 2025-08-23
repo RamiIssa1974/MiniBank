@@ -38,11 +38,20 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
                 return AuthenticateResult.Fail("Invalid Username or Password");
             }
 
-            var claims = new[] {
+            var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User")
+                new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User"),
+                new ("userId", user.Id.ToString())
             };
-            var identity = new ClaimsIdentity(claims, Scheme.Name);
+
+            if (user.CustomerId.HasValue)
+            {
+                claims.Add(new Claim("customerId", user.CustomerId.Value.ToString()));
+            }
+            var identity = new ClaimsIdentity(claims,
+                                                Scheme.Name,
+                                                ClaimTypes.Name,
+                                                ClaimTypes.Role);
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, Scheme.Name);
 

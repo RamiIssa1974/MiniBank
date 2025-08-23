@@ -34,7 +34,13 @@ public class TransactionRepository : ITransactionRepository
             q = q.Where(t => t.AccountId == accountId);
 
         if (!string.IsNullOrWhiteSpace(type))
-            q = q.Where(t => t.Type == type);
+        {
+            if (Enum.TryParse<TransactionType>(type, true, out var parsedType))
+            {
+                q = q.Where(t => t.Type == parsedType);
+            }
+        }
+
 
         if (dateFrom is not null)
             q = q.Where(t => t.CreatedAt >= dateFrom);

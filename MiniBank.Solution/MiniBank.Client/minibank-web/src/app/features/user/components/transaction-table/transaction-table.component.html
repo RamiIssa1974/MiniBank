@@ -1,0 +1,20 @@
+<!-- transaction-table.component.html -->
+<div class="card">
+  <table *ngIf="items?.length; else noTx">
+    <thead><tr><th>Date</th><th>Type</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let t of items">
+        <td>{{ t.createdAt | date:'short' }}</td>
+        <td>{{ t.type }}</td>
+        <td>{{ t.amount | currency:'ILS':'symbol':'1.2-2':'he-IL' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noTx>No transactions</ng-template>
+
+  <div class="pager">
+    <button (click)="prev()" [disabled]="page<=1">Prev</button>
+    <span>Page {{page}}</span>
+    <button (click)="next()" [disabled]="disableNext()">Next</button>
+  </div>
+</div>

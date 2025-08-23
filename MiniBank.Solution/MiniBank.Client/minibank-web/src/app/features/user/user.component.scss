@@ -1,0 +1,8 @@
+/* src/app/features/user/user.component.css (or global styles.css) */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: .5rem 1rem; border-bottom: 1px solid #eee; background: #fafafa;
+}
+.topbar .right { display: flex; gap: .75rem; align-items: center; }
+.topbar button { padding: .35rem .75rem; border-radius: .4rem; border: 1px solid #ddd; background: #fff; cursor: pointer; }
+.container { padding: 1rem; }

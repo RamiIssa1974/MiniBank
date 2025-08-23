@@ -8,7 +8,7 @@ public class TransactionEntry
     public int AccountId { get; set; }
     public Account? Account { get; set; }
 
-    public string Type { get; set; } = "Deposit"; // Deposit/Withdraw/TransferIn/TransferOut
+    public TransactionType Type { get; set; } = TransactionType.Deposit; // Deposit/Withdraw/TransferIn/TransferOut
 
     [Column(TypeName = "decimal(18,2)")]
     public decimal Amount { get; set; }

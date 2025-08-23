@@ -20,6 +20,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .IsUnique(false);
 
         modelBuilder.Entity<TransactionEntry>()
+            .Property(t => t.Type)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<TransactionEntry>()
             .HasIndex(t => new { t.AccountId, t.CreatedAt });
 
         // קשרים

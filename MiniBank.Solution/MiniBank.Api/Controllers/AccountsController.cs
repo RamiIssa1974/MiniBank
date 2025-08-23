@@ -36,7 +36,7 @@ public class AccountsController : ControllerBase
         return Ok(items);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,User")]
     [HttpGet("my")]
     public async Task<IActionResult> GetMyAccounts(CancellationToken ct)
     {

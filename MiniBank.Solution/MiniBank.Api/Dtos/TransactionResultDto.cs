@@ -15,7 +15,7 @@ public class TransactionResultDto
         TransactionId = t.Id,
         AccountId = a.Id,
         NewBalance = a.Balance,
-        Type = t.Type,
+        Type = t.Type.ToString(),
         CreatedAt = t.CreatedAt
     };
 }

@@ -14,9 +14,10 @@ public class HealthController : ControllerBase
     public HealthController(AppDbContext db) => _db = db;
 
     [HttpGet]
-    public IActionResult Get() =>
-        Ok(new { status = "OK", timeUtc = DateTime.UtcNow });
-
+    public IActionResult Get()
+    {        
+        return Ok(new { status = "OK", timeUtc = DateTime.UtcNow });
+    }
     [HttpGet("db")]
     public async Task<IActionResult> Db()
     {

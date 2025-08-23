@@ -1,21 +1,25 @@
-﻿// Controllers/AuthController.cs
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MiniBank.Api.Models;
+using System.Security.Claims;
+
+namespace MiniBank.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    [Authorize(Roles = "Admin")]
+    // require any authenticated user (use Roles="Admin" if you want admin-only)
     [HttpGet("me")]
+    [Authorize(Roles = "Admin,User")]
     public IActionResult Me()
     {
-        return Ok(new
+        var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToArray();
+        var res = new
         {
             user = User.Identity?.Name,
-            role = User.IsInRole("Admin") ? "Admin" : "User",
-            customerId = User.FindFirst("customerId")?.Value
-        });
+            roles,
+            customerId = User.FindFirst("CustomerId")?.Value
+        };
+        return Ok(res);
     }
 }

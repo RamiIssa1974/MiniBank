@@ -1,0 +1,26 @@
+<!-- transaction-form.component.html -->
+<form [formGroup]="form" (ngSubmit)="submit()" class="card">
+  <label>Operation</label>
+  <select formControlName="op">
+    <option value="deposit">Deposit</option>
+    <option value="withdraw">Withdraw</option>
+    <option value="transfer">Transfer</option>
+  </select>
+
+  <label>Account</label>
+  <select formControlName="accountId">
+    <option *ngFor="let a of accounts" [value]="a.id">
+      {{ a.iban | slice:0:4 }}****{{ a.iban | slice:-4 }}
+    </option>
+  </select>
+
+  <label>Amount</label>
+  <input type="number" step="0.01" formControlName="amount"/>
+
+  <ng-container *ngIf="form.value.op === 'transfer'">
+    <label>To IBAN</label>
+    <input type="text" formControlName="toIban"/>
+  </ng-container>
+
+  <button type="submit" [disabled]="form.invalid">Go</button>
+</form>
